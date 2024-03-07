@@ -17,6 +17,7 @@
   <script src="socket.io.min.js"></script>
   <script>
     const socket = new io("ws://localhost:3000");
+    let poradi = 0;
 
     const form = document.getElementById('form');
     const input = document.getElementById('input');
@@ -25,14 +26,20 @@
     const chat_message = () => {
         console.log('chat_message: ', input.value);
         if (input.value) {
-            socket.emit('chat_message', input.value);
+            poradi++
+            socket.emit('chat_message', JSON.stringify({
+                poradi:poradi,
+                zprava: input.value
+            }));
             input.value = '';
         }
     };
 
     socket.on('chat_message', (msg) => {
+        JSON.parse;
         const item = document.createElement('li');
         item.textContent = msg;
+        item.classList.add("bg-blue-500");
         messages.appendChild(item);
     });
 </script>
